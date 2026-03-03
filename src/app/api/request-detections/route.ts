@@ -18,21 +18,29 @@ export async function OPTIONS() {
 }
 
 export async function GET() {
-  return withCors(NextResponse.json(getRequestDetections(), { status: 200 }));
+  console.log('[request-detections] GET request received');
+  const detections = getRequestDetections();
+  console.log('[request-detections] Returning', detections.total, 'detection(s)');
+  return withCors(NextResponse.json(detections, { status: 200 }));
 }
 
 export async function POST(request: Request) {
+  console.log('[request-detections] POST request received');
   let detection: RequestDetection;
 
   try {
     detection = (await request.json()) as RequestDetection;
-  } catch {
+    console.log('[request-detections] Detection data:', detection);
+  } catch (error) {
+    console.error('[request-detections] Failed to parse request JSON:', error);
     return withCors(
       NextResponse.json({ success: false, message: "Invalid JSON payload" }, { status: 400 }),
     );
   }
 
+  console.log('[request-detections] Storing detection');
   addRequestDetection(detection);
 
+  console.log('[request-detections] Response sent successfully');
   return withCors(NextResponse.json({ success: true, message: "Detection stored" }, { status: 200 }));
 }

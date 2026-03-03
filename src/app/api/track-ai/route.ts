@@ -14,19 +14,24 @@ export async function OPTIONS() {
 }
 
 export async function POST(request: Request) {
+  console.log('[track-ai] POST request received');
   let report: TrackingReport;
 
   try {
     report = (await request.json()) as TrackingReport;
-  } catch {
+    console.log('[track-ai] Report data:', report);
+  } catch (error) {
+    console.error('[track-ai] Failed to parse request JSON:', error);
     return withCors(
       NextResponse.json({ success: false, message: "Invalid JSON payload" }, { status: 400 }),
     );
   }
 
+  console.log('[track-ai] Processing tracking report');
   addTrackingReport(report);
   sendAlert(report);
 
+  console.log('[track-ai] Response sent successfully');
   return withCors(
     NextResponse.json({ success: true, message: "Tracking data received" }, { status: 200 }),
   );

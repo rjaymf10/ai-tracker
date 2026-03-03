@@ -55,6 +55,7 @@ export default function Home() {
         data-auto-init="true"
         data-endpoint="/api/track-ai"
         data-debug="true"
+        data-track-behavior="false"
       />
     </div>
   );

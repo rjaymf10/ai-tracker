@@ -117,12 +117,12 @@
       if (this.config.trackBehavior) {
         this.setupBehaviorTracking();
 
-        // Analyze behavior after 5 seconds
-        setTimeout(() => this.analyzeBehavior(), 5000);
+        // Analyze behavior after 2 seconds
+        setTimeout(() => this.analyzeBehavior(), 2000);
       }
 
-      // Final analysis after 10 seconds
-      setTimeout(() => this.finalizeDetection(), 10000);
+      // Final analysis after 5 seconds
+      setTimeout(() => this.finalizeDetection(), 5000);
     }
 
     // Check referrer for AI assistant traffic
